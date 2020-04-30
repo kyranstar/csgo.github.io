@@ -19,7 +19,7 @@
 
   <meta property='og:title' content='Best College Majors'/>
     <meta property='og:image' content='https://github.com/kyranstar/csgo.github.io/blob/master/img/preview.png'/>
-    <meta property='og:description' content='This interactive, scrollable data visualisation will take you on a journey through all of the different college majors in the United States, and compare how they stack up in terms of median graduate salary, gender ratios, employability, and other factors. '/>
+    <meta property='og:description' content='This interactive, scrollable data visualisation will take you on a journey through a data-driven analysis of strategic utility usage in Counter Strike: Global Offensive. '/>
     <meta property='og:url' content='https://cuthchow.github.io/college-majors-visualisation/'/>
 
 
@@ -40,16 +40,18 @@
          <section class="step">
            <div class="title"></div>
           <br><br>
-          <h1>Where to flash your bangs?</h1>
+          <h1>Where to throw your nades?</h1>
            <h2>A data driven analysis of strategic grenade usage in Counter Strike: Global Offensive</h2>
           <p>By <a href = 'https://www.linkedin.com/in/kyran-adams/'>Kyran Adams</a></p>
-           <p>Counter Strike: Global Offensive (CS: GO) is a team-based strategic shooter that has not stopped growing in popularity since its release, seven years ago. A game is between two teams of five players and many rounds. In each round, one team, the Terrorists (T), attempts to plant a bomb and defend it until it detonates while the other team, the Counter Terrorists (CT), attempts to stop the bomb plant or defuse it once it's planted. Either team can also win the round by killing all players on the enemy team.</p>
-           <p>One thing that has always drawn me to this game is the strategic importance of utility — smoke grenades (smokes), flashbangs (flashes), high explosives (HEs), and molotov cocktails. A well-thrown smoke can give your team cover to advance into a new position or block eyesight from an enemy and can have a pivotal role on the round. I am interested in deriving the strategic effectiveness of different uses of utility from data. This information would allow players to figure out what utility is effective or even uncover utility that is commonly thought to be effective, but isn’t.</p>
+           <p>Counter Strike: Global Offensive (CS: GO) is a team-based strategic shooter that has not stopped growing in popularity since its release, seven years ago. Counter Strike has nearly 20 years of competitive history, with tournaments now often offering prize pools of more than $1,000,000.</p>
+           <p>With the increasing popularity of esports comes a increasing importance in advice regarding gameplay strategy. Esports also provides a perfect opportunity to collect and utilize data for analysis, as the game servers can easily collect data on the games.</p>
+           <p>One thing that has always drawn me to this game is the strategic importance of utility — smoke grenades (smokes), flashbangs (flashes), and high explosives (HEs). A well-thrown smoke can give your team cover to advance into a new position or block eyesight from an enemy and have a pivotal role on the round. I am using data from <a href="https://www.kaggle.com/skihikingkevin/csgo-matchmaking-damage">this kaggle dataset.</a></p>
 
          </section>
          <section class="step">
           <h1>CS: GO</h1>
-
+           <p>First, I should give a small explanation of how the game works.</p>
+          <p>A round is between two teams of five players. In each round, one team, the Terrorists (T), attempts to plant a bomb and defend it until it detonates while the other team, the Counter Terrorists (CT), attempts to stop the bomb plant or defuse it once it's planted. Either team can also win the round by killing all players on the enemy team.</p>
          </section>
         <section class="step">
           <h1>One particular game</h1>
@@ -60,11 +62,20 @@
 
          </section>
         <section class="step">
-          <h1>Clusters</h1>
-
+          <h1>Effectiveness of Smokes</h1>
+          <p>Here are all of the nades plotted with the color of the result of the round: red if that round was won by the thrower, and blue if it was lost. However, the result is a little unclear. </p>
+          <p>My goal here is to determine locations that are, on average, the best locations to throw grenades. To answer this question, I performed logistic regression on the outcome of the round, using the nade location as a predictor.</p>
          </section>
         <section class="step">
-          <h1>Effectiveness of Clusters</h1>
+          <h1>Clusters</h1>
+          <p>Because of the likely discontinuous relationship between (x, y) coordinates of utility and their effect on the round,
+            I clustered the utility and assigned them a one-hot encoded categorical value representing which cluster they are in.
+            I used the clustering algorithm Density-based spatial clustering of applications with noise (DBSCAN) which
+            creates clusters that correspond to high density areas of points (colored) while leaving lower density areas
+            (black) as outliers. </p>
+         </section>
+      <section class="step">
+          <h1>Effectiveness of Smoke Clusters</h1>
 
          </section>
     </div>
@@ -74,7 +85,7 @@
   <script src="js/vendor/modernizr-3.8.0.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
   <script>window.jQuery || document.write('<script src="js/vendor/jquery-3.4.1.min.js"><\/script>')</script>
-  <script src = "https://d3js.org/d3.v4.min.js"></script>
+  <script src = "https://d3js.org/d3.v5.min.js"></script>
   <script src="js/plugins.js"></script>
   <script src="js/scroller.js"></script>
   <script src="js/plots.js"></script>

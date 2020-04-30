@@ -20,6 +20,9 @@ scroll.on('active', function(index){
 let activationFunctions = [
   draw1,
   draw2,
+  draw3,
+  draw4,
+  draw5,
+  draw6,
+  draw7,
 ]
-loadData()
-drawInitial()
