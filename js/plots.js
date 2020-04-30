@@ -11,17 +11,19 @@ function loadData(){
 function drawInitial(){
   console.log("Drawing Initial");
   var margin = {top: 10, right: 40, bottom: 30, left: 30},
-    width = 450 - margin.left - margin.right,
-    height = 400 - margin.top - margin.bottom;
+    width = 1000 - margin.left - margin.right,
+    height = 850 - margin.top - margin.bottom;
 
 // append the svg object to the body of the page
 var svG = d3.select("#vis")
   .append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
+    .attr("width", 850)
+    .attr("height", 850)
   .append("g")
     .attr("transform",
           "translate(" + margin.left + "," + margin.top + ")");
+
+svG.style("background","url('https://www.google.nl/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png') no-repeat");
 
 // Create data
 var data = [ {x:10, y:20}, {x:40, y:90}, {x:80, y:50} ]
@@ -34,6 +36,11 @@ svG
   .append('g')
   .attr("transform", "translate(0," + height + ")")
   .call(d3.axisBottom(x));
+
+svG
+  .append("image").attr("xlink:href", "https://github.com/kyranstar/csgo.github.io/blob/master/img/de_mirage.png")
+  .attr("width", 850)
+  .attr("height", 850)
 
 // X scale and Axis
 var y = d3.scaleLinear()
@@ -67,7 +74,8 @@ function clean(chartType) {
 }
 
 function draw1(){
-  console.log("Drawing data1");
+  let svg = d3.select("#vis").select('svg')
+  clean('none')
 }
 function draw2(){
 
