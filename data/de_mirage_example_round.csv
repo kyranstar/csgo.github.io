@@ -1,8 +1,11 @@
 file,round,seconds,att_side,vic_side,is_bomb_planted,bomb_site,nade,nade_land_x,nade_land_y,map,start_seconds,end_seconds,winner_team,winner_side,round_type,ct_eq_val,t_eq_val,cluster
-esea_match_13792436.dem,10,19.001999999999953,CounterTerrorist,,False,,Incendiary,340.2304,-1469.705,de_mirage,934.1475,1000.482,Team 1,CounterTerrorist,ECO,31550,9600,
-esea_match_13792436.dem,10,19.45589999999993,CounterTerrorist,,False,,Incendiary,454.0016,-1446.761,de_mirage,934.1475,1000.482,Team 1,CounterTerrorist,ECO,31550,9600,
-esea_match_13792436.dem,10,23.415899999999965,CounterTerrorist,,False,,Smoke,498.01190844219144,518.0688368286444,de_mirage,934.1475,1000.482,Team 1,CounterTerrorist,ECO,31550,9600,3
-esea_match_13792436.dem,10,23.728999999999928,CounterTerrorist,,False,,Smoke,340.1822234353675,204.19863419240608,de_mirage,934.1475,1000.482,Team 1,CounterTerrorist,ECO,31550,9600,1
-esea_match_13792436.dem,10,21.803699999999935,CounterTerrorist,,False,,HE,734.8788407876779,658.3792185717097,de_mirage,934.1475,1000.482,Team 1,CounterTerrorist,ECO,31550,9600,0
-esea_match_13792436.dem,10,46.80059999999992,CounterTerrorist,,False,,HE,337.04553714174307,173.9139198111352,de_mirage,934.1475,1000.482,Team 1,CounterTerrorist,ECO,31550,9600,1
-esea_match_13792436.dem,10,27.46989999999994,CounterTerrorist,,False,,Flash,431.1970364593488,463.7690157780838,de_mirage,934.1475,1000.482,Team 1,CounterTerrorist,ECO,31550,9600,1
+esea_match_13779770.dem,6,51.1712,Terrorist,,False,,Molotov,-1078.991,-1531.777,de_mirage,627.0779,729.2011,Team 1,CounterTerrorist,NORMAL,18350,22250,
+esea_match_13779770.dem,6,24.200199999999995,Terrorist,,False,,Smoke,488.1563925911484,830.8443486130238,de_mirage,627.0779,729.2011,Team 1,CounterTerrorist,NORMAL,18350,22250,2
+esea_match_13779770.dem,6,19.848600000000033,CounterTerrorist,,False,,Smoke,703.2311315266134,643.1713177257526,de_mirage,627.0779,729.2011,Team 1,CounterTerrorist,NORMAL,18350,22250,0
+esea_match_13779770.dem,6,26.203899999999976,CounterTerrorist,,False,,Smoke,382.96781438876974,194.25739319299623,de_mirage,627.0779,729.2011,Team 1,CounterTerrorist,NORMAL,18350,22250,1
+esea_match_13779770.dem,6,33.49839999999995,CounterTerrorist,,False,,Smoke,649.2579183154611,792.5953397599843,de_mirage,627.0779,729.2011,Team 1,CounterTerrorist,NORMAL,18350,22250,2
+esea_match_13779770.dem,6,44.784599999999955,Terrorist,,False,,HE,661.0249520764281,683.6472193586465,de_mirage,627.0779,729.2011,Team 1,CounterTerrorist,NORMAL,18350,22250,-1
+esea_match_13779770.dem,6,27.675299999999993,CounterTerrorist,,False,,HE,734.1601441216611,630.1171811922093,de_mirage,627.0779,729.2011,Team 1,CounterTerrorist,NORMAL,18350,22250,0
+esea_match_13779770.dem,6,21.6644,CounterTerrorist,,False,,Flash,717.7770625073114,653.621234703915,de_mirage,627.0779,729.2011,Team 1,CounterTerrorist,NORMAL,18350,22250,2
+esea_match_13779770.dem,6,36.143800000000056,CounterTerrorist,,False,,Flash,697.2872198089296,629.1630863663191,de_mirage,627.0779,729.2011,Team 1,CounterTerrorist,NORMAL,18350,22250,2
+esea_match_13779770.dem,6,41.090400000000045,CounterTerrorist,,False,,Flash,541.3263697406902,447.7935682077514,de_mirage,627.0779,729.2011,Team 1,CounterTerrorist,NORMAL,18350,22250,1

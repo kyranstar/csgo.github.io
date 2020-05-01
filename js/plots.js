@@ -1,5 +1,5 @@
 console.log("Loading data");
-Promise.all(
+data_promise = Promise.all(
   [d3.csv('data/de_mirage_example_round.csv', function (d) {
     return {
       file_round: d.file_round,
@@ -81,7 +81,8 @@ Promise.all(
         cluster: +d.cluster,
       };
     })
-  ]).then(data => {
+  ]);
+data_promise.then(data => {
   data_ct_example = data[0]
   data_ct_smoke_locs = data[1]
   data_t_smoke_locs = data[2]
@@ -152,9 +153,9 @@ function drawInitial() {
     .attr("transform", "translate(20,20)");
 
   var legendEffect = d3.legendColor()
-    .shapeWidth(30)
+    .shapeWidth(50)
     .orient('horizontal')
-    .cells([-1, -0.5, 0, 0.5, 1])
+    .cells([-1, -0.75, -0.5, -0.25, 0, 0.25, 0.5, 0.75, 1])
     .scale(nadeEffectColorScale);
 
   svg.select(".legendEffect")
@@ -183,6 +184,7 @@ function draw1() {
   svg.selectAll('circle')
     .data(data_ct_smoke_locs)
     .transition().duration(1000)
+    .attr("r", 2)
     .style("fill", "#69b3a2")
     .attr("opacity", 0.5)
 
@@ -197,20 +199,15 @@ function draw2() {
   clean('none')
 
   svg.selectAll('circle')
-    .data(data_ct_smoke_locs)
-    .transition().duration(1000)
+    .attr('opacity', 1)
+    .data(data_ct_example)
+    .exit()
     .attr("opacity", 0)
 
-  svg.select(".legendEffect")
+  svg.selectAll('circle')
     .transition().duration(1000)
-    .attr('opacity', 0);
-}
-
-function draw3() {
-  console.log("Drawing draw3");
-  let svg = d3.select("#vis").select('svg')
-  clean('none')
-  //console.log(random_round_nades);
+    .attr("r", 6)
+    .style("fill", function(d) {return (d.att_side === "CounterTerrorist") ? "#69b3a2" : "#ba4a4a"})
 
   svg.select(".legendEffect")
     .transition().duration(1000)
@@ -225,6 +222,7 @@ function draw4() {
   svg.selectAll('circle')
     .data(data_ct_smoke_locs)
     .transition().duration(1000)
+    .attr("r", 2)
     .attr("cx", function (d) {
       return xScale(d.nade_land_x)
     })

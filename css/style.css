@@ -10,10 +10,11 @@ body {
 #sections {
     position: relative;
     display: inline-block;
-    width: 500px;
+    width: 30%;
     top: 60px;
     z-index: 90;
-    margin-right: 50px;
+    margin-right: 20px;
+    margin-left: 50px;
 }
 
 .categoryLegend {
@@ -48,7 +49,7 @@ strong {
 
 #graphic {
     margin: auto;
-    width: 1500px;
+    width: auto;
     flex-direction: row;
     align-items: top;
     justify-content: space-around;
@@ -60,27 +61,14 @@ strong {
     top: 0px;
     z-index: 1;
     margin-left: 0;
-    height: 1000px;
-    width: 1000px;
+    height: auto;
+    width: auto;
 }
 
 .tick line {
-    stroke: 'red'
+    stroke: 'red';
 }
 
-#tooltip {
-    position: absolute;
-    display: none;
-    background: rgba(0, 0, 0, .7);
-    border-radius: 3px;
-    box-shadow: -3px 3px 15px #939393;
-    color: white;
-    padding: 6px;
-    font-family: "Merriweather";
-    font-size: 1.1em;
-    max-width: 400px;
-    z-index: 100;
-}
 
 svg circle:hover{
     cursor: pointer;
@@ -90,6 +78,9 @@ svg circle:hover{
     fill: #939393;
 }
 
+.legendEffect text.label {
+   fill: #FFFFFF;
+}
 
 .sizeLegend2 {
     opacity: 0.7
@@ -102,4 +93,43 @@ a {
 
 img {
     display: none;
+}
+
+
+#section1_scroll a {
+  padding-top: 60px;
+}
+#section1_scroll a span {
+      position: absolute;
+    top: 20px;
+    left: 50%;
+    width: 24px;
+    height: 24px;
+    margin-left: -12px;
+    border-left: 1px solid #000;
+    border-bottom: 1px solid #000;
+    -webkit-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+    box-sizing: border-box;
+}
+
+.scroll a {
+  bottom: 20px;
+  left: 50%;
+  z-index: 2;
+  display: inline-block;
+  -webkit-transform: translate(0, -50%);
+  transform: translate(0, -50%);
+  color: #000000;
+  letter-spacing: .1em;
+  text-decoration: none;
+  transition: opacity .3s;
+}
+.scroll a:hover {
+  opacity: .5;
+}
+
+.center {
+  margin: auto;
+   width: 24px;
 }
