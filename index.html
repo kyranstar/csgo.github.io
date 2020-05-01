@@ -47,11 +47,12 @@
            <p>With the increasing popularity of esports comes a increasing importance in advice regarding gameplay strategy. Esports also provides a perfect opportunity to collect and utilize data for analysis, as the game servers can easily collect data on the games.</p>
            <p>One thing that has always drawn me to this game is the strategic importance of utility — smoke grenades (smokes), flashbangs (flashes), and high explosives (HEs). A well-thrown smoke can give your team cover to advance into a new position or block eyesight from an enemy and have a pivotal role on the round. I am using data from <a href="https://www.kaggle.com/skihikingkevin/csgo-matchmaking-damage">this kaggle dataset.</a></p>
 
+           <p>Pictured on the right is an aggregation of all of the smokes thrown by Counter Terrorists across thousands of games.</p>
          </section>
          <section class="step">
           <h1>CS: GO</h1>
            <p>First, I should give a small explanation of how the game works.</p>
-          <p>A round is between two teams of five players. In each round, one team, the Terrorists (T), attempts to plant a bomb and defend it until it detonates while the other team, the Counter Terrorists (CT), attempts to stop the bomb plant or defuse it once it's planted. Either team can also win the round by killing all players on the enemy team.</p>
+          <p>A round is between two teams of five players. In each round, one team, the Terrorists (T), attempts to plant a bomb on one of the bombsites and defend it until it detonates while the other team, the Counter Terrorists (CT), attempts to stop the bomb plant or defuse it once it's planted. Either team can also win the round by killing all players on the enemy team.</p>
          </section>
         <section class="step">
           <h1>One particular game</h1>
@@ -75,17 +76,62 @@
             (black) as outliers. </p>
          </section>
       <section class="step">
-          <h1>Effectiveness of Smoke Clusters</h1>
+          <h1>Effectiveness of Counter Terrorist Smoke Clusters</h1>
+          <p>CT smokes are very effective. The most effective smokes are 0 (mid-connector), 1 (t ramp), 2 (back-halls), and 8, which I'm not sure what that is. This same cluster appears as cluster 13 in the terrorist clusters. It might either be an artifact in the data or a bounced smoke for top mid that I am not aware of.</p>
+      </section>
+      <section class="step">
+          <h1>Effectiveness of Terrorist Smoke Clusters</h1>
+          <p>Terrorist smokes are more variable in their effectivness. Some are extremely effective, and some are actually negatively impacting. The effective smokes are 2 (top mid), 5 (stairs), 16 (front halls), 20 (A site), and 21 (kitchen window). The most ineffective smokes are 4 (jungle/connector), 8 (jungle), 9 (lower mid), 11 (palace), 15 (top mid). Smoke 10 (sandwich) is actually statistically significantly bad for the terrorist, which makes sense, as it is not an intentional smoke, and usually signifies a missed stairs smoke.</p>
+          <p>One interesting result is that terrorist smoke 2 is almost the same position as smoke 15, but they have very different effects. The result seems to be that to throw a top mid smoke, deeper onto catwalk is much more effective.</p>
+      </section>
+      <section class="step">
+          <h1>Effectiveness of Counter Terrorist Flash Clusters</h1>
+          <p>It seems CT cluster 6 is a strong flash. This corresponds to CT taking underpass control. This makes sense as it is very difficult to defend against this flash, and strategically, CT taking underpass control cuts off half the map for Ts. It also seems cluster 0, 3 and 4 are good, corresponding to connector, T ramp, and outside T ramp. Cluster 2, mid window flash, was not very good. It is interesting that CT flashes seem more effective than terrorist flashes in winning the round, and more statistically significant.</p>
+      </section>
+      <section class="step">
+          <h1>Effectiveness of Terrorist Flash Clusters</h1>
+          <p>For terrorists, the strongest flashes were 4 and 8, corresponding to outside apartments and underpass. It is interesting that 2 and 6 are not very effective at all, despite being very common. It is very interesting that cluster 1, one of the most common flashes for attacking B, is actually negatively impactful. This could be because it alerts the enemy of the attack rather than surprises them.</p>
+      </section>
+      <section class="step">
+          <h1>Effectiveness of Counter Terrorist HE Clusters</h1>
+          <p>It seems that CT HE's are very effective, especially in clusters 3,4, and 5 corresponding to top of mid, palace, and underpass.</p>
+      </section>
+      <section class="step">
+          <h1>Effectiveness of Terrorist HE Clusters</h1>
+          <p>Many terrorist HE's also are very effective. 4 (mid window), 20 (mid window), and 6 (jungle) are incredibly effective. 0, 11 (connector), 13 (connector) are also very effective. HE's are also interesting in that they are quite effective also when not in any cluster at all (the -1 cluster).</p>
+      </section>
+      <section class="step">
+          <h1>Effectiveness of Terrorist Groups of Smokes</h1>
 
-         </section>
+      </section>
+      <section class="step">
+          <h1>Effectiveness of Utility as a Whole</h1>
+
+      </section>
+      <section class="step">
+          <h1>Takeaways: How should I use my utility?</h1>
+        <p>Through this analysis I found many interesting results that definitely impact gameplay, at least at the nonprofessional levels, for which this data was collected. I will list some takeaways that players might use to guide their gameplay on de\_mirage.</p>
+        <ul>
+          <li> As a terrorist, one should be careful using flashes without thought. The most commonly thrown flashes are actually very ineffective - top mid, t ramp, and over b apartments. In fact, flashes that are not in common clusters are actually more effective than almost all of the clusters.</li>
+          <li>As a counter terrorist, almost all common flashes are good.</li>
+          <li>HEs are much more effective than I previously believed, for both teams. CT HEs are effective in clusters and outside of clusters. T HEs are effective in <i>some</i> clusters and out of clusters. Some T clusters are ineffective and should be avoided.</li>
+          <li>Smokes are, as expected, the most effective type of utility. They have a strongest net effect from Ts, even though CT smokes have a more consistent effect across the different clusters.</li>
+        </ul>
+
+<p>The biggest takeaway from this is to be intentional with utility. Many of the ineffective uses of utility that I found align with common patterns at lower levels, which I hypothesize are simply done out of habit rather than strategy.</p>
+        <p>In the future, I could definitely take this line of research further. First, I could extend this research easily to other maps using the same code. I am also interested in differences in my results between different skill levels. If I could get a dataset of professional utility usage, I could compare those results to these. I could also potentially do more in-depth analysis by using the timing of the nades, as I can then see more accurately groups of smokes, for example, as they would have to be thrown within a 10 second time span.</p>
+      </section>
     </div>
+    <div id="legend" style="display: inline-block"></div>
     <div id="vis">
     </div>
+
   </div>
   <script src="js/vendor/modernizr-3.8.0.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
   <script>window.jQuery || document.write('<script src="js/vendor/jquery-3.4.1.min.js"><\/script>')</script>
   <script src = "https://d3js.org/d3.v5.min.js"></script>
+  <script src = "https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.25.6/d3-legend.min.js"></script>
   <script src="js/plugins.js"></script>
   <script src="js/scroller.js"></script>
   <script src="js/plots.js"></script>

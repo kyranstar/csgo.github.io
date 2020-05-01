@@ -1,7 +1,8 @@
 // INITIALIZE SCROLLER
 let scroll = scroller().container(d3.select('#graphic'))
 scroll()
-let lastIndex, activeIndex = 0
+let lastIndex = 0
+let activeIndex = 0
 //This is where most of the magic happens. Every time the user scrolls, we receive a new index. First, we find all the irrelevant sections, and reduce their opacity.
 scroll.on('active', function(index){
   d3.selectAll('.step')
@@ -25,4 +26,13 @@ let activationFunctions = [
   draw5,
   draw6,
   draw7,
+  draw8,
+  draw9,
+  draw10,
+  draw11,
+  draw12,
+  draw13,
+  draw14,
+  draw15
 ]
+
