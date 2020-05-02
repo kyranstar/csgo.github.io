@@ -1,0 +1,133 @@
+---
+title: "STAT 410 Final Project"
+output:
+  html_document:
+    df_print: paged
+---
+
+# CS: GO Utility Usage Analysis
+
+
+First, we will read in our preprocessed data that contains, round-by-round, the number of times that utility was thrown in particular clusters, and which team won.
+
+```{r}
+# Office hours questions
+# 1. How do I determine which interaction terms to include? If I want to test a hypothesis - i.e. is this group a good group, I should do it in isolation, right? 
+# 2. How do I interpret the results from logistic regression?
+# 3. Should I take out the insignificant results? They change the results of other variables, how do I know which to keep and which to take out?
+
+
+rm(list=ls())
+set.seed(42)
+library(caret)
+library(margins)
+library(stargazer)
+library(plyr)
+
+df1 <- read.csv("de_mirage_clustered_nade_round_win.csv")
+# Remove unimportant columns
+df1 <- df1[ , !names(df1) %in% c("X", "file", "round", "Flash_Terrorist_distance_to_centroid", "Flash_CounterTerrorist_distance_to_centroid","HE_Terrorist_distance_to_centroid", "HE_CounterTerrorist_distance_to_centroid", "Smoke_Terrorist_distance_to_centroid","Smoke_CounterTerrorist_distance_to_centroid")]
+
+# Sort columns
+df1 <- df1[, order(names(df1))]
+
+# Encode the response variable
+df1$winner_side <- ifelse(df1$winner_side == "Terrorist", 0, 1)
+
+# Variable distributions
+summary(df1)
+
+# Number of nades thrown in each cluster
+colSums(df1)
+
+# Split training/testing data
+smp_size <- floor(0.8 * nrow(df1))
+train_ind <- sample(seq_len(nrow(df1)), size = smp_size)
+train <- df1[train_ind, ]
+test <- df1[-train_ind, ]
+```
+
+Let's create a model that compares different utility types in their effect on round wins.
+
+```{r}
+agg_utility <- df1
+
+# Sum clusters for each respective type of utility and side
+agg_utility$Smoke_T <- rowSums(df1[, grep("Smoke_Terrorist*", names(df1))])
+agg_utility$Smoke_CT <- rowSums(df1[, grep("Smoke_CounterTerrorist*", names(df1))])
+agg_utility$Flash_T <- rowSums(df1[, grep("Flash_Terrorist*", names(df1))])
+agg_utility$Flash_CT <- rowSums(df1[, grep("Flash_CounterTerrorist*", names(df1))])
+agg_utility$HE_T <- rowSums(df1[, grep("HE_Terrorist*", names(df1))])
+agg_utility$HE_CT <- rowSums(df1[, grep("HE_CounterTerrorist*", names(df1))])
+mod1 <- glm(winner_side ~ Smoke_T + Smoke_CT + Flash_T + Flash_CT + HE_T + HE_CT, data=agg_utility, family = "binomial")
+summary(mod1)
+stargazer(mod1, title="Effectiveness of Utility Types",
+keep.stat="n", ci=TRUE, ci.level=0.95, single.row=TRUE, type="html")
+
+```
+Interestingly, terrorist flashes are the weakest out of all types of utility! HEs are also surprisingly strong.
+
+Now let's look at individual clusters.
+```{r}
+
+mydat <- train[ , !(names(train) %in% 
+                              c("Flash_CounterTerrorist_distance_to_centroid",
+                               "Flash_Terrorist_distance_to_centroid",
+                               "HE_CounterTerrorist_distance_to_centroid",
+                               "HE_Terrorist_distance_to_centroid",
+                               "Smoke_CounterTerrorist_distance_to_centroid",
+                               "Smoke_Terrorist_distance_to_centroid"))]
+names(mydat) <- gsub("_", ".", names(mydat))
+mod1 <- glm(winner.side ~ ., data=mydat, family = "binomial")
+summary(mod1)
+stargazer(mod1, title="Effectiveness of Utility Positions",
+keep.stat="n", ci=TRUE, ci.level=0.95, single.row=TRUE, type="html")
+```
+
+Now let's see which clusters are statistically significantly different from the baseline for that team/utility type, where the baseline is all unclustered nades.
+
+```{r}
+# Test that common utility positions (clusters) are better than other positions
+library(car)
+for (nade in c("Flash", "Smoke", "HE")) {
+  for (team in c("CounterTerrorist", "Terrorist")) {
+    prefix <- paste(nade, "_", team, "_", sep="")
+    non_cluster <- paste(prefix, "cluster_.1", sep="")
+    clusters <- colnames(df1)[grepl(prefix, colnames(df1)) & !grepl(non_cluster, colnames(df1))]
+    for (c in clusters) {
+      h0 = paste(non_cluster, "=", c)
+      print(paste("Testing", h0))
+      pval <- linearHypothesis(mod1, h0)$`Pr(>Chisq)`[2]
+      if (pval < 0.05) {
+        print("Significant")
+      }
+    }
+  }
+}
+```
+
+Let's look at the interaction effects of using certain smokes together, as a terrorist.
+
+```{r}
+# Terrorist smokes
+smoke_df <- df1[,grepl("Smoke", colnames(df1)) & !grepl("CounterTerrorist", colnames(df1)) & !grepl("distance_to_centroid", colnames(df1)) | grepl("winner_side", colnames(df1))]
+colnames(smoke_df) = sub("Smoke_Terrorist_", "", colnames(smoke_df))
+
+# Binarize it
+smoke_df[,] = ifelse(smoke_df[,] > 0, 1, 0)
+t_smoke_group_mod <- glm(winner_side ~ ., data=smoke_df, family = "binomial")
+summary(t_smoke_group_mod)
+# Pairwise interactions
+t_smoke_group_mod2 <- glm(winner_side ~ . 
+                          + cluster_3 * cluster_4
+                          + cluster_3 * cluster_4 * cluster_5
+                          + cluster_1 * cluster_6
+                          + cluster_1 * cluster_19
+                          + cluster_1 * cluster_14, 
+                          data=smoke_df, family = "binomial")
+summary(t_smoke_group_mod2)
+stargazer(t_smoke_group_mod2, title="Effectiveness of Grouped Smokes",
+keep.stat="n", ci=TRUE, ci.level=0.95, single.row=TRUE)
+
+
+```

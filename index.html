@@ -25,7 +25,7 @@
   <meta content='https://kyranstar.github.io/csgo.github.io/' property='og:url'/>
 
 
-  <title>Best College Majors</title>
+  <title>CS: GO Utility Data Analysis</title>
 </head>
 
 <body>
@@ -94,63 +94,62 @@
       <h1>Clusters</h1>
       <p>One clustering algorithm, DBSCAN, creates clusters that correspond to high density areas of points and leave lower density areas outliers.
         We can use this to color the smokes on the right based on their cluster.</p>
-      <p>I could then run logistic regression using these cluster counts as predictors. I am basically asking the
-        question: What is the average effect on the likelihood of winning from throwing one additional grenade in any
-        particular cluster?</p>
+      <p>We can then run logistic regression using these cluster counts as predictors. We are basically asking the
+        question: <i>What is the average change in the likelihood of winning from throwing one additional grenade in any
+          particular cluster?</i></p>
     </section>
     <section class="step">
-      <h1>Effectiveness of Counter Terrorist Smoke Clusters</h1>
+      <h2>Effectiveness of Counter Terrorist Smoke Clusters</h2>
       <p>Here are the results, where the average effect of a cluster is plotted as the color of that cluster. The more
-        blue a cluster is, the more it helps CTs. The more red, the more it helps Ts.</p>
-      <p>CT smokes are very effective. The most effective smokes are mid-connector, t ramp, and palace. </p>
+        blue a cluster is, the more it helps CTs. The more red, the more it helps Ts. The color of the outliers (a non-clustered smoke)
+        is based on the average effect of all of the outliers, which has a large variance.</p>
+      <p>From this graph we can see that the most effective smokes are mid-connector, t ramp (especially deep ramp), and palace. In fact, in relation to the other types of nades, CT smokes are very effective.</p>
     </section>
     <section class="step">
-      <h1>Effectiveness of Terrorist Smoke Clusters</h1>
+      <h2>Effectiveness of Terrorist Smoke Clusters</h2>
       <p>Terrorist smokes are more variable in their effectiveness. Some are extremely effective, and some actually help
-        the CTs, on average (this could be because they warn the CTs that the Ts are pushing). The most effective smokes
+        the CTs (this could be because they warn the CTs of an incoming push). The most effective smokes
         are top mid, stairs, front halls, A site, kitchen window, and jungle. The most ineffective smokes are
-        jungle/connector, jungle, lower mid, palace, top mid. Smoke 10 (sandwich) is actually statistically
-        significantly bad for the terrorist, which makes sense, as it is not an intentional smoke, and usually signifies
+        jungle/connector, jungle, lower mid, palace, top mid. Sandwich is the only statistically
+        significantly bad for the Ts, which makes sense, as it is not an intentional smoke, and usually signifies
         a missed stairs smoke.</p>
-      <p>One interesting result is that terrorist smoke 2 is almost the same position as smoke 15, but they have very
-        different effects. The result seems to be that to throw a top mid smoke, deeper onto catwalk is much more
-        effective. Similarly, there are several jungle/connector smoke clusters that have varying effects. It looks like
-        missing the smoke by even a bit reduces the jungle smoke considerably.</p>
+      <p>One interesting result is that some clusters are very close together, but have very
+        different effects. One example is that a deeper top mid smoke onto catwalk is much more effective than a shallow one.
+        Similarly, missing the jungle smoke by even a bit reduces the effectiveness considerably.</p>
     </section>
     <section class="step">
-      <h1>Effectiveness of Counter Terrorist Flash Clusters</h1>
-      <p>It seems CT cluster 6 is a strong flash. This corresponds to CT taking underpass control. This makes sense as
+      <h2>Effectiveness of Counter Terrorist Flash Clusters</h2>
+      <p>It seems that for CTs, flashing to take underpass is very strong. This makes sense as
         it is very difficult to defend against this flash, and strategically, CT taking underpass control cuts off half
-        the map for Ts. It also seems cluster 0, 3 and 4 are good, corresponding to connector, T ramp, and outside T
-        ramp. Cluster 2, mid window flash, was not very good. It is interesting that CT flashes seem more effective than
+        the map for Ts. It also seems cluster  connector, T ramp, and outside T
+        ramp are very good. Mid window flash is not very good. It is interesting that CT flashes seem more effective than
         terrorist flashes in winning the round, and more statistically significant.</p>
     </section>
     <section class="step">
-      <h1>Effectiveness of Terrorist Flash Clusters</h1>
-      <p>For terrorists, the strongest flashes were 4 and 8, corresponding to outside apartments and underpass. It is
-        interesting that 2 and 6 are not very effective at all, despite being very common. It is very interesting that
-        cluster 1, one of the most common flashes for attacking B, is actually negatively impactful. This could be
+      <h2>Effectiveness of Terrorist Flash Clusters</h2>
+      <p>For terrorists, the strongest flashes were outside apartments and underpass. It is
+        interesting that top mid over ramp are not very effective at all, despite being very common. It is very interesting that
+        outside b apartments, one of the most common flashes for attacking B, is actually negatively impactful. This could be
         because it alerts the enemy of the attack rather than surprises them.</p>
     </section>
     <section class="step">
-      <h1>Effectiveness of Counter Terrorist HE Clusters</h1>
-      <p>It seems that CT HE's are very effective, especially in clusters 3,4, and 5 corresponding to top of mid,
-        palace, and underpass.</p>
+      <h2>Effectiveness of Counter Terrorist HE Clusters</h2>
+      <p>It seems that CT HE's are very effective, especially in top of mid, palace, and underpass.</p>
     </section>
     <section class="step">
-      <h1>Effectiveness of Terrorist HE Clusters</h1>
+      <h2>Effectiveness of Terrorist HE Clusters</h2>
       <p>Many terrorist HE's also are very effective. Mid window, connector and jungle are incredibly
         effective. HE's are also interesting in that they are
         quite effective also when not in any cluster at all (the -1 cluster).</p>
     </section>
     <section class="step">
-      <h1>Effectiveness of Terrorist Groups of Smokes</h1>
+      <h2>Effectiveness of Terrorist Groups of Smokes</h2>
       <p>I performed logistic regression on just terrorist smokes, but added interaction terms between groups of smokes
-        that I thought might be significant. I added groups (3, 4), (3, 4, 5), (1, 6), (1, 19), and (1, 14).</p>
+        that I thought might be significant, such as CT + stairs + connector/jungle for taking A.</p>
       <p>I found that out of these groups, none had a significant increase in chance of terrorist wins, and most
         actually decreased the chances that terrorists would win. My hypothesis is that often at lower ranked play,
         players throw smoke groups simply because they see professional players doing it, and not actually for a
-        strategic advantage. However, when they throw individual smokes, they intuitively do it for a reason.</p>
+        strategic advantage. However, when players throw individual smokes, they do it more strategically. .</p>
     </section>
     <section class="step">
       <h1>Effectiveness of Utility as a Whole</h1>
@@ -225,13 +224,13 @@
     </section>
     <section class="step">
       <h1>Takeaways: How should I use my utility?</h1>
-      <p>Through this analysis I found many interesting results that definitely impact gameplay, at least at the
-        nonprofessional levels, for which this data was collected. I will list some takeaways that players might use to
-        guide their gameplay on de\_mirage.</p>
+      <p>Through this analysis we found many interesting results impacting strategy (at least at the
+        nonprofessional levels from which this data was collected). Here are some takeaways to guide utility usage
+        on de_mirage.</p>
       <ul>
-        <li> As a terrorist, one should be careful using flashes without thought. The most commonly thrown flashes are
-          actually very ineffective - top mid, t ramp, and over b apartments. In fact, flashes that are not in common
-          clusters are actually more effective than almost all of the clusters.
+        <li> As a T, one should be careful using flashes without thought. The most commonly thrown flashes are
+          actually very ineffective - top mid, T ramp, and over B apartments. In fact, common flashes (those in clusters) are not much better on average
+          than the rest.
         </li>
         <li>As a counter terrorist, almost all common flashes are good.</li>
         <li>HEs are much more effective than I previously believed, for both teams. CT HEs are effective in clusters and
@@ -246,11 +245,9 @@
       <p>The biggest takeaway from this is to be intentional with utility. Many of the ineffective uses of utility that
         I found align with common patterns at lower levels, which I hypothesize are simply done out of habit rather than
         strategy.</p>
-      <p>In the future, I could definitely take this line of research further. First, I could extend this research
-        easily to other maps using the same code. I am also interested in differences in my results between different
-        skill levels. If I could get a dataset of professional utility usage, I could compare those results to these. I
-        could also potentially do more in-depth analysis by using the timing of the nades, as I can then see more
-        accurately groups of smokes, for example, as they would have to be thrown within a 10 second time span.</p>
+      <br>
+      <p>Thanks for reading!</p>
+      <p>Questions or thoughts? Tweet me at <a href="https://twitter.com/Kyran_Adams">@Kyran_Adams</a> or email me at <a href="mailto:kyran.park.adams@gmail.com">kyran.park.adams@gmail.com</a>.</p>
     </section>
   </div>
   <div id="legend" style="display: inline-block"></div>

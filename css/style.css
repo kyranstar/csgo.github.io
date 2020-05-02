@@ -16,9 +16,12 @@ body {
     margin-left: 50px;
 }
 
+
+
 .step {
     margin-bottom: 100px;
-    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    height: 800px;
+    font-family: medium-content-serif-font, Georgia, Cambria, "Times New Roman", Times, serif;;
     font-weight: 400;
     line-height: 1.5em;
     text-align: justify;
@@ -27,15 +30,21 @@ body {
     justify-content: space-around;
     font-size: 21px;
 }
-
-h1, h2 {
-    font-weight: 700;
-    text-align: right;
-    line-height: 32px;
+@media (max-width: 479px) {
+  .step {
+    height: 1050px;
+  }
 }
 
 h1 {
+    font-weight: 700;
+    color: rgb(1, 22, 39);
     font-size: 36px;
+    line-height: 32px;
+}
+
+h2 {
+    font-size: 28px;
 }
 
 #graphic {
@@ -64,12 +73,12 @@ svg circle:hover{
     fill: #939393;
 }
 
-.legendEffect text.label {
+.legendEffect text {
    fill: #FFFFFF;
 }
 
 a {
-    color: rgb(221, 0, 255);
+    color: rgb(32, 164, 243);
     text-decoration: none;
 }
 

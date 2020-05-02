@@ -98,37 +98,32 @@ data_promise.then(data => {
 
 function drawInitial() {
   console.log("Drawing Initial");
-  var margin = {top: 40, right: 40, bottom: 30, left: 30},
-    width = 1000 - margin.left - margin.right,
-    height = 850 - margin.top - margin.bottom;
+  var size = $(document).width()/2;
+
 
 // append the svg object to the body of the page
   var svg = d3.select("#vis")
     .append("svg")
-    .attr("width", 850)
-    .attr("height", 850)
-    .append("g")
-    .attr("transform",
-      "translate(" + margin.left + "," + margin.top + ")");
+    .attr("width", size)
+    .attr("height", size)
+    //.append("g")
+    //.attr("transform",
+     // "translate(" + margin.left + "," + margin.top + ")");
 
 // X scale and Axis
   xScale = d3.scaleLinear()
     .domain([0, 1000])         // This is the min and the max of the data: 0 to 100 if percentages
-    .range([0, 850]);       // This is the corresponding value I want in Pixel
-  svg
-    .append('g')
-    .attr("transform", "translate(0," + height + ")")
-  //.call(d3.axisBottom(x));
+    .range([0, size - 15]);       // This is the corresponding value I want in Pixel
 
   svg
     .append("image").attr("xlink:href", "https://raw.githubusercontent.com/kyranstar/csgo.github.io/master/img/de_mirage.jpg")
-    .attr("width", 850)
-    .attr("height", 850)
+    .attr("width", size)
+    .attr("height", size)
 
 // X scale and Axis
   yScale = d3.scaleLinear()
     .domain([0, 1000])         // This is the min and the max of the data: 0 to 100 if percentages
-    .range([0, 840]);       // This is the corresponding value I want in Pixel
+    .range([0, size - 15]);       // This is the corresponding value I want in Pixel
   svg
     .append('g')
   //.call(d3.axisLeft(y));
@@ -145,7 +140,7 @@ function drawInitial() {
       return yScale(d.nade_land_y)
     })
     .attr("r", 2)
-    .style("fill", "#69b3a2")
+    .style("fill", "#e2dfdf")
     .attr("opacity", 0.5);
   nadeEffectColorScale = d3.scaleDiverging(t => d3.interpolateRdBu((t + 1) / 2));
 
@@ -178,7 +173,7 @@ function drawInitial() {
       return yScale(d.att_pos_y)
     })
     .style("fill", function (d) {
-      return (d.att_side === "CounterTerrorist") ? "#0000FF" : "#FF0000"
+      return (d.att_side === "CounterTerrorist") ? "#20A4F3" : "#D00000"
     })
     .attr("r", 6)
     .attr("opacity", 0)
@@ -195,9 +190,9 @@ function drawInitial() {
       return yScale(d.nade_land_y)
     })
     .style("fill", function (d) {
-      return (d.att_side === "CounterTerrorist") ? "#69b3a2" : "#ba4a4a"
+      return (d.att_side === "CounterTerrorist") ? "#192D3D" : "#FFBA08"
     })
-    .attr("r", 6)
+    .attr("r", 15)
     .attr("opacity", 0)
 
   var lineFunction = d3.line()
@@ -218,7 +213,7 @@ function drawInitial() {
         {x: (d.att_pos_x + d.nade_land_x) / 2, y: (d.att_pos_y + d.nade_land_y) / 2 - 50},
         {x: d.nade_land_x, y: d.nade_land_y}
       ],
-      color: (d.att_side === "CounterTerrorist") ? "#0000FF" : "#FF0000",
+      color: (d.att_side === "CounterTerrorist") ? "#192D3D" : "#FFBA08",
       seconds: d.seconds
     }
   });
@@ -261,7 +256,7 @@ function draw1() {
     .data(data_ct_smoke_locs)
     .transition().duration(1000)
     .attr("r", 2)
-    .style("fill", "#69b3a2")
+    .style("fill", "#e2dfdf")
     .attr("opacity", 0.5)
 
   svg.select(".legendEffect")
@@ -297,19 +292,19 @@ function draw2() {
     .transition().duration(500).delay(function (d) {
     return (d.seconds - min_seconds) / range_seconds * anim_time;
   })
-    .attr("opacity", 1)
+    .attr("opacity", 0.9)
 
   nade_path.selectAll('path')
     .transition().duration(500).delay(function (d, i) {
     return (d.seconds - min_seconds) / range_seconds * anim_time + 500;
   })
-    .attr("opacity", 1)
+    .attr("opacity", 0.85)
 
   nade_pos.selectAll('circle')
     .transition().duration(500).delay(function (d, i) {
     return (d.seconds - min_seconds) / range_seconds * anim_time + 500;
   })
-    .attr("opacity", 1)
+    .attr("opacity", 0.75)
 
 
   svg.select(".legendEffect")
@@ -343,7 +338,7 @@ function draw4() {
     .attr("cy", function (d) {
       return yScale(d.nade_land_y)
     })
-    .style("fill", "#69b3a2")
+    .style("fill", "#e2dfdf")
     .attr("opacity", 0.5)
 
   svg.select(".legendEffect")
@@ -368,7 +363,7 @@ function draw5() {
     .style("fill", function (d) {
       return (d.winner_side === d.att_side) ? 'red' : 'blue'
     })
-    .attr("opacity", 0.3)
+    .attr("opacity", 0.2)
   svg.select(".legendEffect")
     .transition().duration(1000)
     .attr('opacity', 0);
@@ -407,7 +402,7 @@ function draw6() {
     .style("fill", function (d) {
       return (d.cluster < 0) ? '#000000' : (clusterColorScale(d.cluster))
     })
-    .attr("opacity", 0.5)
+    .attr("opacity", function (d) { return (d.cluster < 0) ? 0.3 : 0.8})
   svg.select(".legendEffect")
     .transition().duration(1000)
     .attr('opacity', 0);
@@ -542,6 +537,9 @@ function draw9() {
       return nadeEffectColorScale((d.cluster < 0) ? ct_flash_no_cluster_effect : (ct_flash_effectiveness[d.cluster]))
     })
     .attr("opacity", 0.5)
+  svg.select(".legendEffect")
+    .transition().duration(1000)
+    .attr('opacity', 1);
 }
 
 function draw10() {
@@ -663,13 +661,14 @@ function draw12() {
 }
 
 function draw13() {
-
+console.log("draw13");
 }
 
 function draw14() {
-
+console.log("draw14");
 }
 
 function draw15() {
+  console.log("draw15");
 
 }
