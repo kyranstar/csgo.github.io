@@ -7,6 +7,8 @@ data_promise = Promise.all(
       att_side: d.att_side,
       nade_land_y: +d.nade_land_y,
       nade_land_x: +d.nade_land_x,
+      att_pos_y: +d.att_pos_y,
+      att_pos_x: +d.att_pos_x,
       cluster: +d.cluster,
     };
   }),
@@ -156,11 +158,85 @@ function drawInitial() {
     .shapeWidth(50)
     .orient('horizontal')
     .cells([-1, -0.75, -0.5, -0.25, 0, 0.25, 0.5, 0.75, 1])
-    .scale(nadeEffectColorScale);
+    .scale(nadeEffectColorScale)
+    .title("Effect on round win (R helps T, B helps CT)")
+
 
   svg.select(".legendEffect")
     .call(legendEffect)
     .attr('opacity', 0);
+
+  thrower_pos = svg.append('g').attr('class', 'thrower_pos');
+  thrower_pos.selectAll("circle")
+    .data(data_ct_example)
+    .enter()
+    .append("circle")
+    .attr("cx", function (d) {
+      return xScale(d.att_pos_x)
+    })
+    .attr("cy", function (d) {
+      return yScale(d.att_pos_y)
+    })
+    .style("fill", function (d) {
+      return (d.att_side === "CounterTerrorist") ? "#0000FF" : "#FF0000"
+    })
+    .attr("r", 6)
+    .attr("opacity", 0)
+
+  nade_pos = svg.append('g').attr('class', 'nade_pos');
+  nade_pos.selectAll("circle")
+    .data(data_ct_example)
+    .enter()
+    .append("circle")
+    .attr("cx", function (d) {
+      return xScale(d.nade_land_x)
+    })
+    .attr("cy", function (d) {
+      return yScale(d.nade_land_y)
+    })
+    .style("fill", function (d) {
+      return (d.att_side === "CounterTerrorist") ? "#69b3a2" : "#ba4a4a"
+    })
+    .attr("r", 6)
+    .attr("opacity", 0)
+
+  var lineFunction = d3.line()
+    .x(function (d) {
+      return xScale(d.x);
+    })
+    .y(function (d) {
+      return yScale(d.y);
+    })
+    .curve(d3.curveNatural);
+
+  nade_path = svg.append('g').attr('class', 'nade_path');
+  path_dat = data_ct_example.map(function (d) {
+    return {
+      points: [
+        {x: d.att_pos_x, y: d.att_pos_y},
+        // midpoint
+        {x: (d.att_pos_x + d.nade_land_x) / 2, y: (d.att_pos_y + d.nade_land_y) / 2 - 50},
+        {x: d.nade_land_x, y: d.nade_land_y}
+      ],
+      color: (d.att_side === "CounterTerrorist") ? "#0000FF" : "#FF0000",
+      seconds: d.seconds
+    }
+  });
+  nade_path.selectAll("path")
+    .data(path_dat)
+    .enter()
+    .append("path")
+    .attr("class", "line")
+    .attr("d", function (d) {
+      return lineFunction(d.points)
+    })
+    .attr("stroke-width", 2)
+    .style("stroke", function (d) {
+      return d.color
+    })
+    .style("fill", "rgba(0,0,0,0)")
+    .attr("opacity", 0)
+
 }
 
 function clean(chartType) {
@@ -191,6 +267,16 @@ function draw1() {
   svg.select(".legendEffect")
     .transition().duration(1000)
     .attr('opacity', 0);
+
+  thrower_pos.selectAll("circle")
+    .transition().duration(1000)
+    .attr("opacity", 0)
+  nade_pos.selectAll("circle")
+    .transition().duration(1000)
+    .attr("opacity", 0)
+  nade_path.selectAll('path')
+    .transition().duration(1000)
+    .attr("opacity", 0)
 }
 
 function draw2() {
@@ -199,15 +285,32 @@ function draw2() {
   clean('none')
 
   svg.selectAll('circle')
-    .attr('opacity', 1)
-    .data(data_ct_example)
-    .exit()
+    .transition().duration(1000)
     .attr("opacity", 0)
 
-  svg.selectAll('circle')
-    .transition().duration(1000)
-    .attr("r", 6)
-    .style("fill", function(d) {return (d.att_side === "CounterTerrorist") ? "#69b3a2" : "#ba4a4a"})
+  var min_seconds = 15.0;
+  var max_seconds = 52.0;
+  var range_seconds = max_seconds - min_seconds;
+  var anim_time = 5000;
+
+  thrower_pos.selectAll('circle')
+    .transition().duration(500).delay(function (d) {
+    return (d.seconds - min_seconds) / range_seconds * anim_time;
+  })
+    .attr("opacity", 1)
+
+  nade_path.selectAll('path')
+    .transition().duration(500).delay(function (d, i) {
+    return (d.seconds - min_seconds) / range_seconds * anim_time + 500;
+  })
+    .attr("opacity", 1)
+
+  nade_pos.selectAll('circle')
+    .transition().duration(500).delay(function (d, i) {
+    return (d.seconds - min_seconds) / range_seconds * anim_time + 500;
+  })
+    .attr("opacity", 1)
+
 
   svg.select(".legendEffect")
     .transition().duration(1000)
@@ -219,9 +322,20 @@ function draw4() {
   let svg = d3.select("#vis").select('svg')
   clean('none')
 
+
+  thrower_pos.selectAll("circle")
+    .transition().duration(1000)
+    .attr("opacity", 0)
+  nade_pos.selectAll("circle")
+    .transition().duration(2000)
+    .attr("opacity", 0)
+  nade_path.selectAll('path')
+    .transition().duration(1000)
+    .attr("opacity", 0)
+
   svg.selectAll('circle')
     .data(data_ct_smoke_locs)
-    .transition().duration(1000)
+    .transition().duration(2000)
     .attr("r", 2)
     .attr("cx", function (d) {
       return xScale(d.nade_land_x)
@@ -231,6 +345,7 @@ function draw4() {
     })
     .style("fill", "#69b3a2")
     .attr("opacity", 0.5)
+
   svg.select(".legendEffect")
     .transition().duration(1000)
     .attr('opacity', 0);
@@ -256,7 +371,7 @@ function draw5() {
     .attr("opacity", 0.3)
   svg.select(".legendEffect")
     .transition().duration(1000)
-    .attr('opacity', 1);
+    .attr('opacity', 0);
 }
 
 function draw6() {

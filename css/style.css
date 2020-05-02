@@ -3,34 +3,29 @@
 @import url('https://fonts.googleapis.com/css?family=Domine:400,700&display=swap');
 
 body {
-    background-color: rgb(245, 244, 241);
+    background-color: rgb(255, 255, 255);
     overflow-x: hidden;
 }
 
 #sections {
     position: relative;
     display: inline-block;
-    width: 30%;
-    top: 60px;
-    z-index: 90;
+    width: 40%;
+    margin-top: 100px;
     margin-right: 20px;
     margin-left: 50px;
 }
 
-.categoryLegend {
-    font-family: "Open Sans,sans-serif";
-}
-
 .step {
     margin-bottom: 100px;
-    height: 700px;
-    font-family: "Open Sans,sans-serif";
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
     font-weight: 400;
-    line-height: 1.4em;
+    line-height: 1.5em;
     text-align: justify;
-    /* display: flex;
+    display: flow;
     flex-direction: column;
-    justify-content: space-around; */
+    justify-content: space-around;
+    font-size: 21px;
 }
 
 h1, h2 {
@@ -40,35 +35,26 @@ h1, h2 {
 }
 
 h1 {
-    font-size: 45px;
-}
-
-strong {
-    color: rgb(245, 155, 155);
+    font-size: 36px;
 }
 
 #graphic {
     margin: auto;
     width: auto;
     flex-direction: row;
-    align-items: top;
+    align-items: center;
     justify-content: space-around;
 }
 
 #vis {
     display: inline-block;
     position: fixed;
-    top: 0px;
-    z-index: 1;
-    margin-left: 0;
     height: auto;
     width: auto;
+    margin: auto;
+    top: 50%;
+    transform: translate(0%, -50%);
 }
-
-.tick line {
-    stroke: 'red';
-}
-
 
 svg circle:hover{
     cursor: pointer;
@@ -80,10 +66,6 @@ svg circle:hover{
 
 .legendEffect text.label {
    fill: #FFFFFF;
-}
-
-.sizeLegend2 {
-    opacity: 0.7
 }
 
 a {
@@ -99,6 +81,7 @@ img {
 #section1_scroll a {
   padding-top: 60px;
 }
+
 #section1_scroll a span {
       position: absolute;
     top: 20px;
