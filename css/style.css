@@ -19,22 +19,16 @@ body {
 
 
 .step {
-    margin-bottom: 100px;
-    height: 800px;
-    font-family: medium-content-serif-font, Georgia, Cambria, "Times New Roman", Times, serif;;
-    font-weight: 400;
+    margin-bottom: 400px;
+    height: auto;
+    font-family: medium-content-serif-font, Georgia, Cambria, "Times New Roman", Times, serif;
+
     line-height: 1.5em;
     text-align: justify;
     display: flow;
     flex-direction: column;
-    justify-content: space-around;
-    font-size: 21px;
 }
-@media (max-width: 479px) {
-  .step {
-    height: 1050px;
-  }
-}
+
 
 h1 {
     font-weight: 700;
