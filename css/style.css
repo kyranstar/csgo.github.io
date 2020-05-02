@@ -20,6 +20,7 @@ body {
 
 .step {
     height: auto;
+  margin-bottom: 400px;
     font-family: medium-content-serif-font, Georgia, Cambria, "Times New Roman", Times, serif;
     font-size: 16px;
     line-height: 1.5em;
@@ -33,11 +34,13 @@ h1 {
     font-weight: 700;
     color: rgb(1, 22, 39);
     font-size: 36px;
-    line-height: 32px;
+    line-height: 38px;
 }
 
 h2 {
+  font-weight: 700;
     font-size: 28px;
+  line-height: 30px;
 }
 
 #graphic {
