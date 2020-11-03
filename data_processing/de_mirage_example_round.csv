@@ -1,0 +1,7 @@
+file,round,seconds,att_side,vic_side,is_bomb_planted,bomb_site,nade,nade_land_x,nade_land_y,att_pos_x,att_pos_y,map,winner_side,round_type,ct_eq_val,t_eq_val,cluster
+esea_match_13792436.dem,9,19.064499999999953,CounterTerrorist,,False,,Incendiary,715.1355657633068,631.9514365532166,445.02808407096904,823.005903600236,de_mirage,CounterTerrorist,FORCE_BUY,33800,16250,
+esea_match_13792436.dem,9,23.854100000000017,CounterTerrorist,,False,,Incendiary,345.47232442971335,195.4227748967146,273.50063716124,351.1734166437143,de_mirage,CounterTerrorist,FORCE_BUY,33800,16250,
+esea_match_13792436.dem,9,26.81239999999991,Terrorist,,False,,Decoy,787.8948086566583,557.4762368679915,809.0372641840514,547.5631996852253,de_mirage,CounterTerrorist,FORCE_BUY,33800,16250,
+esea_match_13792436.dem,9,39.6943,CounterTerrorist,,False,,Incendiary,483.1236791577305,687.8409254377336,529.7398965880288,674.7523399567185,de_mirage,CounterTerrorist,FORCE_BUY,33800,16250,
+esea_match_13792436.dem,9,45.70479999999998,Terrorist,,False,,Molotov,642.2710079937609,338.8487113909109,727.9348669916163,645.6780326578792,de_mirage,CounterTerrorist,FORCE_BUY,33800,16250,
+esea_match_13792436.dem,9,72.79899999999998,CounterTerrorist,,False,,Incendiary,642.2710079937609,338.8487113909109,483.79923166309226,615.9860617745426,de_mirage,CounterTerrorist,FORCE_BUY,33800,16250,
