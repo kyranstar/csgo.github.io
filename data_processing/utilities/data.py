@@ -42,7 +42,6 @@ def cluster_positions(firefight_df, eps_map={'DMG_ATT': 0.004, 'DMG_VIC': 0.003,
 
     for pos_type in np.unique(cluster_df['pos_type']):
         for team in cluster_df['att_side'].unique():
-            print(pos_type, team)
             mask = (cluster_df['pos_type'] == pos_type) & (cluster_df['att_side'] == team)
             group = cluster_df[mask]
             # https://medium.com/@tarammullin/dbscan-parameter-estimation-ff8330e3a3bd
@@ -55,7 +54,7 @@ def cluster_positions(firefight_df, eps_map={'DMG_ATT': 0.004, 'DMG_VIC': 0.003,
                 print(f"{team}, {pos_type}: {np.unique(cluster_model.labels_, return_counts=True)}")
     return firefight_df
 
-def cluster_firefights(firefight_df, eps=0.08, n_samples=6, n_seconds_equiv_to_quarter_map=20, verbose=False):
+def cluster_firefights(firefight_df, eps=0.08, min_samples=6, n_seconds_equiv_to_quarter_map=20, verbose=False):
     """
     Clusters the dataframe spatio-temporally into "firefights" - groups of points within a round that
     are within a similar space and time. Also calculates the net damage taken by either team within each 
@@ -64,7 +63,7 @@ def cluster_firefights(firefight_df, eps=0.08, n_samples=6, n_seconds_equiv_to_q
     Input:
         cluster_df: result of DataLoader.load_firefight_df, with columns ['file_round', 'seconds', 'pos_x', 'pos_y', 'hp_dmg']
         eps: the eps to use for DBSCAN
-        n_samples: the n_samples to use for DBSCAN
+        min_samples: the min_samples to use for DBSCAN
         n_seconds_equiv_to_quarter_map: The number of seconds considered equivalent to a quarter of the map when clustering.
     Output:
         the input cluster_df, with new columns ['firefight_cluster', 'firefight_net_t_dmg', ''firefight_net_ct_dmg']
@@ -81,7 +80,7 @@ def cluster_firefights(firefight_df, eps=0.08, n_samples=6, n_seconds_equiv_to_q
     cluster_df['firefight_net_ct_dmg'] = None
     for name, group in cluster_df.groupby('file_round'):
         # https://medium.com/@tarammullin/dbscan-parameter-estimation-ff8330e3a3bd
-        cluster_model = DBSCAN(eps=0.08, min_samples=6)
+        cluster_model = DBSCAN(eps=eps, min_samples=min_samples)
         pts = pd.concat([group['seconds'], group['pos_x'], group['pos_y']], axis=1)
         cluster_model.fit(pts)
         firefight_df.loc[(firefight_df['file_round'] == name), 'firefight_cluster'] = cluster_model.labels_
